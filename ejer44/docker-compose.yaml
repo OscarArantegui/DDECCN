@@ -4,7 +4,7 @@ services:
     container_name: balanceador
     command: pen -r -f 80 192.168.1.80:80 192.168.1.81:80
     ports:
-      - "80:80"
+      - "8080:80"
     networks:
       red_balanceo:
         ipv4_address: 192.168.1.79  # IP del balanceador
