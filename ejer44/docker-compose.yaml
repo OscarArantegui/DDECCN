@@ -1,0 +1,35 @@
+services:
+  balancer:
+    image: grindsa/pen:latest
+    container_name: balanceador
+    command: pen -r -f 80 192.168.1.80:80 192.168.1.81:80
+    ports:
+      - "80:80"
+    networks:
+      red_balanceo:
+        ipv4_address: 192.168.1.79  # IP del balanceador
+
+  web1:
+    build: .
+    container_name: web1
+    volumes:
+      - ./index1.html:/var/www/html/index.html # Contenido
+    networks:
+      red_balanceo:
+        ipv4_address: 192.168.1.80  # IP del equipo 1  
+
+  web2:
+    build: .
+    container_name: web2
+    volumes:
+      - ./index2.html:/var/www/html/index.html # Contenido
+    networks:
+      red_balanceo:
+        ipv4_address: 192.168.1.81  # IP del equipo 2
+
+networks:
+  red_balanceo:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24 # Rango de red
