@@ -1,0 +1,13 @@
+FROM debian
+
+RUN apt-get update && apt-get install -y apache2 libapache2-mod-php php && apt-get clean && rm -rf /var/lib/lists/*
+
+RUN rm /var/www/html/index.html
+
+COPY app /var/www/html/
+
+EXPOSE 80
+
+ENTRYPOINT ["apache2ctl"]
+
+CMD ["-D","FOREGROUND"]

@@ -1,0 +1,15 @@
+services:
+  # Servicio Web
+  web:
+    image: ddeccn/nginx_ip:v1
+    container_name: nginx_ip
+    ports:
+      - "9091:80"
+    networks:
+      - red42
+  app:
+    build: ./ejer38
+    networks:
+      - red42
+networks:
+  red42:

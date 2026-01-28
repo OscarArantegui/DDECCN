@@ -1,0 +1,25 @@
+services:
+  # Servicio de Base de Datos
+  redis:
+    image: redis:7
+    container_name: mi_redis
+    volumes:
+      - datos_redis:/data
+
+  # Servicio Web
+  web:
+    image: nginx:latest
+    container_name: mi_nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./mi_web:/usr/share/nginx/mi_web
+
+# Definición del volumen
+volumes:
+  datos_redis:
